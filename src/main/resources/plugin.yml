@@ -1,0 +1,6 @@
+name: UniversalUHC
+main: me.mathanalysis.it.uhc.UniversalUHCPlugin
+version: ${GIT_COMMIT_HASH}
+author: MathAnalysis
+description: Universal UHC plugin for Minecraft servers.
+api-version: 1.13

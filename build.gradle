@@ -1,0 +1,73 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+}
+
+group = 'me.mathsanalysis.it'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+
+    maven {
+        url = 'https://repo.extendedclip.com/content/repositories/placeholderapi/'
+    }
+
+    maven {
+        url = 'https://ci.pluginwiki.us/plugin/repository/everything/'
+    }
+}
+
+dependencies {
+    compileOnly fileTree(dir: 'libs', include: '*.jar')
+
+    compileOnly 'me.clip:placeholderapi:2.11.5'
+
+    compileOnly 'org.projectlombok:lombok:1.18.30'
+    annotationProcessor 'org.projectlombok:lombok:1.18.30'
+
+    implementation 'com.google.code.gson:gson:2.10.1'
+    implementation 'com.github.cryptomorin:XSeries:9.9.0'
+    implementation 'org.apache.commons:commons-lang3:3.14.0'
+    implementation 'com.github.thatsmusic99:ConfigurationMaster:v1.0.1'
+    implementation 'org.mongodb:mongodb-driver-reactivestreams:5.0.0'
+}
+
+java {
+    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+}
+
+tasks {
+    compileJava {
+        dependsOn clean
+        options.encoding = 'UTF-8'
+    }
+    build {
+        dependsOn shadowJar
+        dependsOn publishToMavenLocal
+    }
+}
+
+shadowJar {
+    archiveFileName = 'universal-uhc.jar'
+}
+
+processResources {
+    filteringCharset 'UTF-8'
+    def commitId = 'git rev-parse --short HEAD'.execute().text.trim();
+    expand 'GIT_COMMIT_HASH': commitId
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId = 'me.mathsanalysis.it'
+            artifactId = 'universal-uhc.jar'
+            version = '1.0-SNAPSHOT'
+            from components.java
+        }
+
+    }
+}
