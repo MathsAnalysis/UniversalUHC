@@ -8,7 +8,7 @@ import org.bukkit.plugin.Plugin;
 public class MainConfig extends CMFile{
 
     public MainConfig() {
-        super(UniversalUHC.get().getPlugin(), "config.yml");
+        super(UniversalUHC.get().getPlugin(), "config");
         load();
     }
 
@@ -18,6 +18,5 @@ public class MainConfig extends CMFile{
         addComment("Database Settings", "This is the settings for the database");
         addDefault("Mongo.URI", "mongodb://localhost:27017");
         addDefault("Mongo.Database", "uhc");
-
     }
 }

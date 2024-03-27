@@ -1,11 +1,13 @@
+
 package me.mathanalysis.it.uhc;
 
 import lombok.Getter;
 import lombok.Setter;
+import me.mathanalysis.it.uhc.config.MainConfig;
+import me.mathanalysis.it.uhc.config.WorldConfig;
 import me.mathanalysis.it.uhc.database.MongoManager;
-import net.xconfig.bukkit.model.SimpleConfigurationManager;
-import net.xconfig.bukkit.model.config.ConfigurationManager;
-import org.bukkit.Bukkit;
+import me.mathanalysis.it.uhc.utils.Tasks;
+import me.mathanalysis.it.uhc.world.WorldManager;
 
 @Getter
 @Setter
@@ -16,8 +18,10 @@ public class UniversalUHC {
 
     private MongoManager mongoManager;
 
+    private MainConfig config;
+    private WorldConfig worldConfig;
 
-    private  
+    private WorldManager worldManager;
 
 
     public void init(){
@@ -32,11 +36,14 @@ public class UniversalUHC {
     }
 
     public void shutdown(){
-
-
+        this.mongoManager.close();
+        Tasks.cancelTasks();
+        instance = null;
     }
 
     public void loadConfig(){
+        this.config = new MainConfig();
+        this.worldConfig = new WorldConfig();
     }
 
     public void loadListener(){
@@ -44,15 +51,12 @@ public class UniversalUHC {
     }
 
     public void loadManager(){
+        this.worldManager = new WorldManager();
     }
 
     public void loadDatabase(){
-        if (!this.mongoManager.isConnected()){
-            this.mongoManager = new MongoManager();
-            this.mongoManager.setConnected(true);
-            String connected = (this.mongoManager.isConnected() ? "true" : "false");
-            Bukkit.getLogger().info("\n&a&lConnected to MongoDB\n Status: " + connected + "\n");
-        }
+        this.mongoManager = MongoManager.get(config.getString("Mongo.URI"), config.getString("Mongo.Database"));
+        MongoManager.logSendMessage();
     }
 
     private void loadHook(){

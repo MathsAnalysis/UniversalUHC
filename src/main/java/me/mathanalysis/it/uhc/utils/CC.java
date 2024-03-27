@@ -1,12 +1,15 @@
 package me.mathanalysis.it.uhc.utils;
 
+import lombok.experimental.UtilityClass;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.ChatColor;
+import org.bukkit.Utility;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@UtilityClass
 public class CC {
 
     public String translate(String input){
