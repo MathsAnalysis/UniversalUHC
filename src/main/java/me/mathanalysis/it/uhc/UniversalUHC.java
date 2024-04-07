@@ -9,6 +9,7 @@ import me.mathanalysis.it.uhc.listener.DataListener;
 import me.mathanalysis.it.uhc.listener.PlayerListener;
 import me.mathanalysis.it.uhc.manager.GameManager;
 import me.mathanalysis.it.uhc.manager.PlayerManager;
+import me.mathanalysis.it.uhc.manager.item.ItemManager;
 import me.mathanalysis.it.uhc.team.TeamManager;
 import me.mathanalysis.it.uhc.utils.ConfigFile;
 import me.mathanalysis.it.uhc.utils.Tasks;
@@ -34,6 +35,7 @@ public class UniversalUHC {
     private GameManager gameManager;
     private TeamManager teamManager;
     private PlayerManager playerManager;
+    private ItemManager itemManager;
 
     private BukkitAudiences audiences;
 
@@ -73,6 +75,7 @@ public class UniversalUHC {
         this.gameManager = new GameManager();
         this.teamManager = new TeamManager();
         this.playerManager = new PlayerManager();
+        this.itemManager = new ItemManager();
     }
 
     public void loadDatabase(){

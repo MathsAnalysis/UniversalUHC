@@ -16,8 +16,6 @@ public class UniversalUHCPlugin extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
-
-
         this.universalUHC = new UniversalUHC();
         this.universalUHC.init();
     }

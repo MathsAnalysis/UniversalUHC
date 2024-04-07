@@ -12,7 +12,6 @@ public class GameManager {
 
     public GameManager(){
         this.gameData = new GameData();
-
     }
 
 }

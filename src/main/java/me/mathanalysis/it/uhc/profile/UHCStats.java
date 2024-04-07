@@ -23,8 +23,6 @@ public class UHCStats {
     private UUID uuid;
     private String name;
 
-    private boolean uhcMod = false, uhcHost = false;
-
     private int kills, deaths,
             wins, bowHit,
             goldHeadEaten, goldenAppleEaten,
@@ -154,9 +152,5 @@ public Document toDocument(){
         return document.getInteger("kills") > 0 && document.getInteger("deaths") == 0 ? document.getInteger("kills")
                 : document.getInteger("kills") == 0 && document.getInteger("deaths") == 0 ? 0.0
                 : (double) document.getInteger("kills") / (double) document.getInteger("deaths");
-    }
-
-    public boolean isStaff(){
-        return uhcMod || uhcHost;
     }
 }

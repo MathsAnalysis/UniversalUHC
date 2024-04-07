@@ -22,6 +22,8 @@ public class Profile {
     private String name, displayName;
     private String firstJoin, lastJoin;
 
+    private boolean uhcHost = false, uhcMod = false, spectator = false;
+
     public Profile(UUID uuid, String name){
         this.uuid = uuid;
         this.name = name;
@@ -87,4 +89,11 @@ public class Profile {
         return profiles.values().stream().filter(profile -> profile.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
     }
 
+    public boolean isSpectator() {
+        return spectator || uhcMod || uhcHost;
+    }
+
+    public boolean isStaff(){
+        return uhcMod || uhcHost;
+    }
 }
