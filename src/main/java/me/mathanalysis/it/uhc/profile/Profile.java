@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.ReplaceOptions;
 import lombok.Data;
+import lombok.Getter;
 import me.mathanalysis.it.uhc.UniversalUHC;
 import me.mathanalysis.it.uhc.utils.Tasks;
 import org.bson.Document;
@@ -15,8 +16,7 @@ import java.util.UUID;
 @Data
 public class Profile {
 
-    public static Map<UUID, Profile> profiles = Maps.newHashMap();
-
+    @Getter public static Map<UUID, Profile> profiles = Maps.newHashMap();
 
     private UUID uuid;
     private String name, displayName;
