@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import lombok.Getter;
 import lombok.Setter;
 import me.mathanalysis.it.uhc.UniversalUHC;
-import me.mathanalysis.it.uhc.profile.Profile;
+import me.mathanalysis.it.uhc.profile.UHCProfile;
 import me.mathanalysis.it.uhc.utils.CC;
 import org.bukkit.entity.Player;
 
@@ -26,7 +26,7 @@ public class PlayerManager {
     }
 
     public void enableSpectator(Player player){
-        Profile profile = Profile.getProfile(player.getUniqueId());
+        UHCProfile profile = UHCProfile.getProfile(player.getUniqueId());
 
         profile.setSpectator(true);
 

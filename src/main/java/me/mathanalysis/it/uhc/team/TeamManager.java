@@ -23,6 +23,18 @@ public class TeamManager {
     private Team team;
     private int index = 0;
 
+    public TeamManager(){
+        if (UniversalUHC.get().getGameManager().getGameData().isTeam()){
+        }
+    }
+
+
+    public void RandomTeam(){
+        //TODO: Random team if is starting a team game
+
+
+    }
+
     public void createTeam(Player player){
         index++;
         String prefix = team.getChatColor() + "[" + this.index + "]";
@@ -91,8 +103,10 @@ public class TeamManager {
             player.sendMessage("&9" + target.getName() + " &7has joined the team");
             target.sendMessage("&7You have joined " + player.getName() + "'s team");
         }
-
     }
+
+
+
 
 
 

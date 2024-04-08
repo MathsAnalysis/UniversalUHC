@@ -22,24 +22,30 @@ public class GameData {
 
     private int time, endTime = 60;
 
-    private boolean started, ended, finalHealEnabled = false, graceEnabled = false, friendlyFire = false;
+    private boolean
+            started = false, ended = false,
+            finalHealEnabled = false, graceEnabled = false,
+            friendlyFire = false, practice = false;
 
     private int autoStartTimer = 60, scatterTimer;
 
-    private boolean league = false, tournament = false, ranked = false;
+    private boolean
+            league = false, tournament = false,
+            ranked = false, team = false;
 
     public void startGame(boolean force){
         if (force){
-            started = true;
-            ended = false;
+            setStarted(true);
+            setEnded(false);
             return;
         }
 
 
         if (totalPlayersList.size() >= minPlayers){
-            started = true;
-            ended = false;
+            setStarted(true);
+            setEnded(false);
         }
+
 
 
     }
