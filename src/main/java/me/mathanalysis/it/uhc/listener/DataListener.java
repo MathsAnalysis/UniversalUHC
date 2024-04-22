@@ -2,15 +2,13 @@ package me.mathanalysis.it.uhc.listener;
 
 import me.mathanalysis.it.uhc.profile.UHCProfile;
 import me.mathanalysis.it.uhc.profile.UHCStats;
+import me.mathanalysis.it.uhc.utils.Utility;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class DataListener implements Listener {
 
@@ -25,9 +23,10 @@ public class DataListener implements Listener {
     public void onQuit(PlayerQuitEvent event){
         Player player = event.getPlayer();
 
-        UHCProfile profile = UHCProfile.getProfile(player.getUniqueId());
-        profile.setLastJoin(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")));
-        profile.save();
+        UHCProfile.getProfile(player.getUniqueId()).thenAccept(profile -> {
+            profile.setLastJoin(Utility.getDateFormatter());
+            profile.save();
+        }).join();
 
         UHCStats.getStats().remove(event.getPlayer().getUniqueId());
         UHCProfile.getProfiles().remove(event.getPlayer().getUniqueId());

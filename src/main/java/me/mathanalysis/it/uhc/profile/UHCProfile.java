@@ -1,11 +1,12 @@
 package me.mathanalysis.it.uhc.profile;
 
-import com.google.common.collect.Maps;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.ReplaceOptions;
-import lombok.Data;
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import lombok.Getter;
+import lombok.Setter;
 import me.mathanalysis.it.uhc.UniversalUHC;
+import me.mathanalysis.it.uhc.event.profile.ProfileCreateEvent;
 import me.mathanalysis.it.uhc.state.PlayerState;
 import me.mathanalysis.it.uhc.utils.Tasks;
 import org.bson.Document;
@@ -14,13 +15,14 @@ import org.bukkit.Bukkit;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
-@Data
+@Getter
+@Setter
 public class UHCProfile {
 
-    @Getter public static Map<UUID, UHCProfile> profiles = Maps.newHashMap();
+    @Getter public static Object2ObjectOpenHashMap<UUID, UHCProfile> profiles = new Object2ObjectOpenHashMap<>();
 
     private UUID uuid;
     private String name, displayName;
@@ -38,6 +40,7 @@ public class UHCProfile {
         this.playerState = PlayerState.LOBBY;
         profiles.put(uuid, this);
         load();
+        Bukkit.getPluginManager().callEvent(new ProfileCreateEvent(this.uuid));
     }
 
     public UHCProfile(UUID uuid){
@@ -84,14 +87,16 @@ public class UHCProfile {
                 .append("lastJoin", this.lastJoin);
     }
 
-    public static UHCProfile getProfile(UUID uuid){
-        UHCProfile UHCProfile = profiles.get(uuid);
+    public static CompletableFuture<UHCProfile> getProfile(UUID uuid) {
+        return CompletableFuture.supplyAsync(() -> {
+            UHCProfile profile = profiles.get(uuid);
 
-        if (UHCProfile == null){
-            UHCProfile = new UHCProfile(uuid);
-        }
+            if (profile == null) {
+                profile = new UHCProfile(uuid);
+            }
 
-        return UHCProfile;
+            return profile;
+        });
     }
 
     public static UHCProfile getProfile(String name){

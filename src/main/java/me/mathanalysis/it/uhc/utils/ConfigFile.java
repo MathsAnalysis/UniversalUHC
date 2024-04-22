@@ -5,28 +5,43 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 
 import java.io.File;
-import java.util.stream.Stream;
 
 public class ConfigFile extends YamlConfiguration {
 
     public final String finalName;
 
-    public ConfigFile(Plugin plugin, String name, boolean load) {
+    public ConfigFile(Plugin plugin, String name, boolean load, boolean forceCreate) {
         this.finalName = name;
 
+        if(forceCreate){
+            this.create();
+        }else {
+            try {
+                File file = new File(plugin.getDataFolder(), name + ".yml");
+
+                if (!file.exists()) {
+                    plugin.saveResource(name + ".yml", false);
+                }
+
+                if (load) {
+                    this.load(file);
+                }
+            }catch (Exception e) {
+                e.printStackTrace();
+                UniversalUHC.get().getPlugin().getLogger().severe("Error loading config file " + name + ".yml");
+            }
+        }
+    }
+
+    public void create(){
         try {
-            File file = new File(plugin.getDataFolder(), name + ".yml");
-
+            File file = new File(UniversalUHC.get().getPlugin().getDataFolder(), this.finalName + ".yml");
             if (!file.exists()) {
-                plugin.saveResource(name + ".yml", false);
+                file.createNewFile();
             }
-
-            if (load) {
-                this.load(file);
-            }
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            UniversalUHC.get().getPlugin().getLogger().severe("Error loading config file " + name + ".yml");
+            UniversalUHC.get().getPlugin().getLogger().severe("Error creating config file " + this.finalName + ".yml");
         }
     }
 

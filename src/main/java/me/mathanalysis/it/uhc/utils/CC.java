@@ -2,10 +2,10 @@ package me.mathanalysis.it.uhc.utils;
 
 import lombok.experimental.UtilityClass;
 import me.clip.placeholderapi.PlaceholderAPI;
+import me.mathanalysis.it.uhc.UniversalUHC;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.ChatColor;
-import org.bukkit.Utility;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -13,6 +13,8 @@ import java.util.List;
 
 @UtilityClass
 public class CC {
+
+    public String PREFIX = translate(UniversalUHC.get().getConfig().getString("Prefix"));
 
     public String translate(String input){
         return ChatColor.translateAlternateColorCodes('&', input);

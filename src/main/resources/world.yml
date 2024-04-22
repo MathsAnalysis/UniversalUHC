@@ -2,19 +2,32 @@ Worlds:
   uhc_world:
     name: "uhc_world"
     border: 1000
-    center: 0,0
+    center:
+      x: 0
+      z: 0
+    spawnLocation:
+      x: 0
+      y: 100
+      z: 0
   uhc_nether:
     name: "uhc_nether"
-    border: 1000
-    center: 0,0
-    boolean: false
-  uhc_end:
-    name: "uhc_end"
-    border: 1000
-    center: 0,0
+    border: 500
+    center:
+      x: 0
+      z: 0
+    spawnLocation:
+      x: 0
+      y: 100
+      z: 0
     boolean: false
   uhc_practice:
     name: "uhc_practice"
     border: 1000
-    center: 0,0
+    center:
+      x: 0
+      z: 0
+    spawnLocation:
+      x: 0
+      y: 100
+      z: 0
     boolean: true

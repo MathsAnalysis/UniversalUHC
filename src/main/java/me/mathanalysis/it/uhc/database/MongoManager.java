@@ -19,10 +19,11 @@ public class MongoManager {
 
     private MongoClient client;
     private MongoDatabase database;
-    private MongoCollection<Document> profiles, stats;
+    private MongoCollection<Document> profiles, stats, kitsPractice;
     private MongoClientSettings settings;
 
     public MongoManager(String URI, String database){
+
         this.settings = MongoClientSettings.builder()
                 .applyConnectionString(new ConnectionString(URI))
                 .retryReads(true)
@@ -32,7 +33,8 @@ public class MongoManager {
         this.client = MongoClients.create(settings);
         this.database = this.client.getDatabase(database);
         this.profiles = this.database.getCollection("profile");
-        this.stats = this.database.getCollection("statistics");
+        this.stats = this.database.getCollection("statistics"); //stats
+        this.kitsPractice = this.database.getCollection("kitsPractice");
     }
 
 
@@ -54,10 +56,10 @@ public class MongoManager {
 
 
     public static void logSendMessage(){
-        String status = connected ? "&aConnected" : "&cDisconnected";
+        String status = connected ? "&aConnesso" : "&cDisconnesso";
         Bukkit.getLogger().info("");
-        Bukkit.getLogger().info(CC.translate("&9&lConnected to MongoDB"));
-        Bukkit.getLogger().info(CC.translate("&9Status: &f" + status));
+        Bukkit.getLogger().info(CC.translate("&5&lConnessione al database: &f&lMongoDB"));
+        Bukkit.getLogger().info(CC.translate("&dStato: &7" + status));
         Bukkit.getLogger().info("");
     }
 
